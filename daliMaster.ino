@@ -2,7 +2,7 @@
  * daliMaster.ino
  *
  *  Created on: 16 Sep 2017
- *      Author: root
+ *      Author: davideloba
  */
 #include <Arduino.h>
 #include "src/daliMaster.h"
@@ -200,7 +200,7 @@ void setup() {
 
 	Wire.begin();
 	Serial.begin(BAUDRATE);
-  Serial.setTimeout(1);
+	Serial.setTimeout(1); //useful
 		delay(1000);
 	Serial.println("Start..");
 
