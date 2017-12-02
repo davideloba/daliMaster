@@ -4,9 +4,12 @@
  *  Created on: 16 Sep 2017
  *      Author: davideloba
  */
+
+
 #include <Arduino.h>
 #include "src/daliMaster.h"
 
+#define ME 3
 #define MAX_SIZE 20 //without NULL char
 #define MAX_CMD 4
 
