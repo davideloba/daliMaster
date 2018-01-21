@@ -44,6 +44,16 @@
 #define LW14_STATUS_BUS_BUSY						6
 #define LW14_STATUS_BUS_ERROR		 				7
 
+//DALI stuff
+#define DALI_BUS_TIMEOUT						2000
+#define TWICE								2
+#define MAX_LAMPS_NUM							64
+#define DELETE_SA							255U
+#define DALI_YES							255U
+#define DALI_BROADCAST							255U
+#define RESET_DELAY							500000
+#define ERR_CODE							-1
+
 /*
 0x00 STATUS REGISTER bits:
   7 - Bus Error Status, 0 = OK, 1 = Bus fault
@@ -55,17 +65,6 @@
   1 - 2 Bytes telegram received (reset by reading 0x01)
   0 - 1 Byte telegram received (reset by reading 0x01)
 */
-
-//DALI stuff
-#define DALI_BUS_TIMEOUT						2000
-#define TWICE								2
-#define MAX_LAMPS_NUM							64
-#define DELETE_SA							255U
-#define DALI_YES							255U
-#define DALI_BROADCAST							255U
-#define RESET_DELAY							500000
-#define ERR_CODE							-1
-
 
 class DALIMASTER{
 
