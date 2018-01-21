@@ -1,22 +1,3 @@
-/*
- * Adapted for Arduino Wire library by Loba
- * davide.loba@gmail.com
- *
- * Sep 2017
- *
- */
-
-/*
- * Code Mercenaries Hard- und Software GmbH
- * Karl-Marx-Strasse 147A
- * 12529 Schönefeld
- * Deutschland
- *
- * Dec 2016
- *
- * */
-
-
 #ifndef __DALI_MASTER__
 #define __DALI_MASTER__
 
@@ -27,41 +8,41 @@
 #include <Arduino.h>
 
 //default I2C address
-#define BAUDRATE         				115200
-#define MAX_CHARS 						10U
+#define BAUDRATE         								115200
+#define MAX_CHARS 											10U
 
 //default I2C address
-#define LW14_I2CADR         				0x23U
+#define LW14_I2CADR         						0x23U
 
-#define LW14_I2C_DELAY 	    				2000 //us
+#define LW14_I2C_DELAY 	    						2000 //us
 
 //mode
-#define LW14_MODE_DACP      				0x00 //direct arc power control
-#define LW14_MODE_CMD       				0x01
+#define LW14_MODE_DACP      						0x00 //direct arc power control
+#define LW14_MODE_CMD       						0x01
 
 //register addresses
-#define LW14_REG_STATUS 					0x00
-#define LW14_REG_CMD    					0x01
-#define LW14_REG_CONFIG 					0x02
-#define LW14_REG_SIGNATURE 				0xF0
-#define LW14_REG_ADDR   					0xFE
+#define LW14_REG_STATUS 								0x00
+#define LW14_REG_CMD    								0x01
+#define LW14_REG_CONFIG 								0x02
+#define LW14_REG_SIGNATURE 							0xF0
+#define LW14_REG_ADDR   								0xFE
 
 //register length
-#define LW14_REG_STATUS_LENGTH 			1
-#define LW14_REG_CMD_LENGTH    			2
-#define LW14_REG_CONFIG_LENGTH 			1
-#define LW14_REG_SIGNATURE_LENGTH 		6
-#define LW14_REG_ADDR_LENGTH   			2
+#define LW14_REG_STATUS_LENGTH 					1
+#define LW14_REG_CMD_LENGTH    					2
+#define LW14_REG_CONFIG_LENGTH 					1
+#define LW14_REG_SIGNATURE_LENGTH 			6
+#define LW14_REG_ADDR_LENGTH   					2
 
 //status register bitset
 #define LW14_STATUS_1_BYTE_TELEGRAM 		0
 #define LW14_STATUS_2_BYTE_TELEGRAM 		1
 #define LW14_STATUS_REPLY_TIMEFRAME 		2
-#define LW14_STATUS_VALID_REPLY 			3
-#define LW14_STATUS_FRAME_ERROR 			4
-#define LW14_STATUS_OVERRUN 				5
-#define LW14_STATUS_BUS_BUSY				6
-#define LW14_STATUS_BUS_ERROR		 	7
+#define LW14_STATUS_VALID_REPLY 				3
+#define LW14_STATUS_FRAME_ERROR 				4
+#define LW14_STATUS_OVERRUN 						5
+#define LW14_STATUS_BUS_BUSY						6
+#define LW14_STATUS_BUS_ERROR		 				7
 
 /*
 0x00 STATUS REGISTER bits:
@@ -76,14 +57,14 @@
 */
 
 //DALI stuff
-#define DALI_BUS_TIMEOUT					2000
-#define TWICE							2
-#define MAX_LAMPS_NUM					64
-#define DELETE_SA						255U
-#define DALI_YES							255U
-#define DALI_BROADCAST					255U
-#define RESET_DELAY						500000
-#define ERR_CODE							-1
+#define DALI_BUS_TIMEOUT								2000
+#define TWICE														2
+#define MAX_LAMPS_NUM										64
+#define DELETE_SA												255U
+#define DALI_YES												255U
+#define DALI_BROADCAST									255U
+#define RESET_DELAY											500000
+#define ERR_CODE												-1
 
 
 class DALIMASTER{
