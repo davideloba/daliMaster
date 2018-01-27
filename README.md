@@ -51,7 +51,7 @@ Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simpl
 See more informations about serial commands [here](/) and [here](daliCommands.h). See also the following links to know more about DALI and LW14 commands.
 
 ## Useful links
-
+ 
 ### LW14
 * [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf)
 
@@ -74,7 +74,7 @@ See more informations about serial commands [here](/) and [here](daliCommands.h)
 
 * **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/33-led-warrior/270-led-warrior14-2)
 
-see the [CREDITS.md](CREDITS.md) file for details
+see [credits.md](credits.md) file for details.
 
 ## License
 
