@@ -1,8 +1,6 @@
 CREDITS
 
-daliMaster library for Arduino™ daliMaster shield
-Adapted and developed by Loba
-davide.loba@gmail.com
+daliMaster library for Arduino™ daliMaster shield by [Loba](davide.loba@gmail.com)
 
 Sep 2017
 

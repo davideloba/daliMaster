@@ -1,14 +1,12 @@
 # daliMaster
-========
 
-This is an Arduino™ library to control your DALI lamps with brand new [daliMaster](www.ebay.d) Arduino™ shield, with buit-in DALI bus supply system. Boom!
+This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](www.ebay.d) shield, with buit-in DALI bus supply system. :boom:!
 
 ## Description
 
 ### What is DALI?
 
-DALI (Digital Addressable Lighting Interface) is a powerful protocol to control lighting. Through DALI you can dimmer your led lamps, ask them status, recall a predefined scenario and so on. Of course, the ballast that powers your lamp must be DALI compatible.
-You want more information about DALI, don't you? I thinks this is not the right place for that but I'm gonna leave you some useful links to the bottom of this page.
+DALI (Digital Addressable Lighting Interface) is a powerful protocol to control lighting. Through DALI you can dimmer your led lamps, ask them status, recall a predefined scenario and so on. Of course, the ballast that powers your lamp must be DALI compatible and acts as a DALI slave. You want more information about DALI, don't you? I thinks this is not the right place for that but I'm gonna leave you some useful links to the bottom of this page.
 
 ### Can I use DALI with my Arduino™?
 
@@ -16,25 +14,25 @@ Well, the answer is YES.
 
 ### How?
 
-[daliMaster](www.ebay.d) is an shield that can transform your Arduino™ in a DALI master. [daliMaster](www.ebay.d) acts as a bridge between Arduino™ I2C interface and DALI bus. Let's make an example to examplain how it works.
+With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com/en/). Let's make an example to explain how it works.
 
 ## Getting Started
 
 * Fit [daliMaster](www.ebay.d) on your Arduino™
 
 * Make connections (You can find an example schema [here](www.ebay.d))
-** Connect your lamps to their ballasts
-** Connect your ballast to mains..be careful!
-** Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
-** Connect your AC/DC 24 V power supply to mains and to [daliMaster](www.ebay.d)..be careful! Remember that you need to supply [daliMaster](www.ebay.d) and the shield will do the rest in order to power DALI bus.
+  * Connect your lamps to their ballasts
+  * Connect your ballast to mains..be careful!
+  * Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
+  * Connect your AC/DC 24V power supply to mains and to [daliMaster](www.ebay.d)..again, be careful! The shield will do the rest in order to power DALI bus.
 
 * Connect Arduino™ to your computer.
 
 * If I'm right, now you should have all of lamps On. Let's turn them off.
 
-* Download this library and load /examples/
+* Download this library and load *daliMaster/examples/serialControl.ino*
 
- * Open serial monitor, select 115000 as baudrate and write:
+ * Now open serial monitor, select 115000 as baudrate and write:
 ```
 -b 0 0
 ```
@@ -42,54 +40,24 @@ If everything went well your lamps now are off. But we don't like darkness, so l
 ```
 -b 0 1
 ```
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
+Cool! Let's push them to maximum:
 ```
-Give examples
+-b 0 254
 ```
+Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simple commands. :thumbsup:
 
-### Installing
+### Next
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+See more informations about serial commands [here](/) and [here](daliCommands.h). See also the following links to know more about DALI and LW14 commands.
 
 ### Useful links
 
-#### DALI
-
 #### LW14
+* [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf)
 
-```
-Give an example
-```
+#### DALI
+* [main commands](http://www.tanzolab.it/www/CM3-HOME_test/dali_commands.pdf)
+* DALI international standard (English/French) [60929 © IEC:2006](http://jnhb.fszjzx.com/upload/biaozhun/pdf/IEC60929Y2006.PDF)
 
 ## Built With
 
@@ -103,6 +71,10 @@ Give an example
 ## Credits
 
 * **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/33-led-warrior/270-led-warrior14-2)
+
+* **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/33-led-warrior/270-led-warrior14-2)
+
+see the [CREDITS.md](CREDITS.md) file for details
 
 ## License
 
