@@ -1,6 +1,7 @@
 #ifndef __DALI_MASTER__
 #define __DALI_MASTER__
 
+#include "Arduino.h"
 #include "daliCommands.h"
 
 #include <stdint.h>
