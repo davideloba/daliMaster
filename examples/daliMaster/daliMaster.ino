@@ -5,9 +5,7 @@
  *      Author: davideloba
  */
 
-
-#include <Arduino.h>
-#include "src/daliMaster.h"
+#include <daliMaster.h>
 
 #define MAX_SIZE 20 //without NULL char
 #define MAX_CMD 4

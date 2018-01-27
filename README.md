@@ -24,13 +24,13 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
   * Connect your lamps to their ballasts
   * Connect your ballast to mains..be careful!
   * Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
-  * Connect your AC/DC 24V power supply to mains and to [daliMaster](www.ebay.d)..again, be careful! The shield will do the rest in order to power DALI bus.
+  * Connect your 24V DC power supply to mains and to [daliMaster](www.ebay.d)..again, be careful! [daliMaster](www.ebay.d) shield will do the rest in order to power DALI bus.
 
-* If I'm right, now you should have all of lamps On. Let's turn them off.
+* If I'm right, now you should have all of lamps on. Let's turn them off.
 
 * Connect Arduino™ to your computer.
 
-* Download this library and load *daliMaster/examples/serialControl.ino*
+* Download this library and load **daliMaster/examples/serialControl.ino**
 
  * Now open serial monitor, select 115000 as baudrate and write:
 ```
