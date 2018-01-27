@@ -1,6 +1,6 @@
 # daliMaster
 
-This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](www.ebay.d) shield, with buit-in DALI bus supply system. :boom:!
+This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](www.ebay.d) shield, with buit-in DALI bus supply system. b:boom::boom:m!
 
 ## Description
 
@@ -26,9 +26,9 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
   * Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
   * Connect your AC/DC 24V power supply to mains and to [daliMaster](www.ebay.d)..again, be careful! The shield will do the rest in order to power DALI bus.
 
-* Connect Arduino™ to your computer.
-
 * If I'm right, now you should have all of lamps On. Let's turn them off.
+
+* Connect Arduino™ to your computer.
 
 * Download this library and load *daliMaster/examples/serialControl.ino*
 
@@ -36,7 +36,7 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
 ```
 -b 0 0
 ```
-If everything went well your lamps now are off. But we don't like darkness, so let's switch them on to the minimun. Write:
+If everything went well your lamps now are off. But we don't like darkness, so let's switch them on to the minimum:
 ```
 -b 0 1
 ```
@@ -46,16 +46,16 @@ Cool! Let's push them to maximum:
 ```
 Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simple commands. :thumbsup:
 
-### Next
+## Next
 
 See more informations about serial commands [here](/) and [here](daliCommands.h). See also the following links to know more about DALI and LW14 commands.
 
-### Useful links
+## Useful links
 
-#### LW14
+### LW14
 * [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf)
 
-#### DALI
+### DALI
 * [main commands](http://www.tanzolab.it/www/CM3-HOME_test/dali_commands.pdf)
 * DALI international standard (English/French) [60929 © IEC:2006](http://jnhb.fszjzx.com/upload/biaozhun/pdf/IEC60929Y2006.PDF)
 
