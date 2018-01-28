@@ -43,28 +43,23 @@ The command register has two bytes which directly represent the DALI command. Th
 See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf).
 
 ### send DALI forward telegram
-**[1] [2] [3] [4]**
+**[TYPE] [1] [2] [3]**
 
-* **[1]**  
-  **-d** *direct ARC command*  
-  **-i** *indirect command*  
-  **-c** *configuration command*  
-  **-q** *query command*
-  * **[2]**    
-  -b *broadcast address*
-    * **[3]**  
-    *dali command*
-
-  * [ARG1]  
-  * -g *group address follow*
-  * -s *slave short address follow*
-
-    * [ARG3]
-    * [SLAVE ADDRESS] *dali slave short address, from 0 up to 63*
-    * [GROUP ADDRESS] *dali group address, from 0 up to 15*
-
-      * [ARG4] *dali command*
-
-* [1]  
-**-x** *dali special command*
+* **[TYPE]**  
+  **-d**  *direct ARC command*  
+  **-i**  *indirect command*  
+  **-c**  *configuration command*  
+  **-q**  *query command*
+  * **[1]**    
+  **-b** *broadcast address*
+    * **[2]** *dali command*
+  * **[1]**  
+  **-g** *group address follow*  
+  **-s** *slave short address follow*
+    * **[2]** *DALI address*  
+    **[SLAVE ADDRESS]** *slave short address, from 0 up to 63*  
+    **[GROUP ADDRESS]** *group address, from 0 up to 15*
+      * **[3]** *Please refer to the DALI specification for details on the commands*
+* **[TYPE]**  
+**-x** *DALI special command*
   * **[2] [3]** *Please refer to the DALI specification for details on the commands*
