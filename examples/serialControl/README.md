@@ -52,14 +52,11 @@ See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW
   **-q**  *query command*
   * **[1]**    
   **-b** *broadcast address*
-    * **[2]** *dali command*
-  * **[1]**  
+    * **[2]** *Please refer to the DALI specification for details on the commands*
   **-g** *group address follow*  
   **-s** *slave short address follow*
-    * **[2]** *DALI address*  
     **[SLAVE ADDRESS]** *slave short address, from 0 up to 63*  
     **[GROUP ADDRESS]** *group address, from 0 up to 15*
       * **[3]** *Please refer to the DALI specification for details on the commands*
-* **[TYPE]**  
 **-x** *DALI special command*
   * **[2] [3]** *Please refer to the DALI specification for details on the commands*
