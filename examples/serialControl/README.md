@@ -1,4 +1,4 @@
-# serialControl.ino wiki
+# serialControl.ino
 
 Here there is a list of commands that you can send to your Arduino™ through serial port to control daliMaster shield.
 
@@ -8,27 +8,27 @@ Load the program *serialControl.ino* under *examples/* folder, open serial monit
 
 ### I2C bus scan
 **-s**  
-scan I2C bus and report if any I2C devices has been found and their address. Default daliMaster address is 35 (0x23).
+Scan I2C bus and report if any I2C devices has been found with their address. Default daliMaster address is 35 (0x23).
 ```
 -s
 TODO: insert respose
 ```
-### I2C bus scan
-**-a [new address]**
-Set by software another I2C address to the daliMaster I2C chip. Values of 128 and more are not accepted.
+### Set new I2C address
+**-a [new address]**  
+Set another I2C address to the daliMaster LW14 chip. Values of 128 and more are not accepted.
 ```
 -a 24
 TODO:
 ```
 ### Read LW14 register
-**-r [register address]**
-*0    [STATUS]
-1   [COMMAND]
-240   [SIGNATURE]*
+**-r [register address]**  
+*0    [STATUS REGISTER]  
+1   [COMMAND REGISTER]  
+240   [SIGNATURE REGISTER]*  
 
 Read LW14 register and echo result.
 * STATUS REGISTER  
-The status register is one byte that contains the bus status and command status flags:
+The status register is one byte that contains the bus status and command status flags:  
 7 - Bus Error Status *(0 = Bus OK, 1 = Bus fault)*  
 6 - Busy *(0 = ready, 1 = busy)*  
 5 - Overrun  
@@ -43,18 +43,17 @@ The command register has two bytes which directly represent the DALI command. Th
 See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf).
 
 ### send DALI forward telegram
-**[ARG0] [ARG1] [ARG2] [ARG3]**
+**[1] [2] [3] [4]**
 
-* [ARG0]
-* -d *direct ARC command*
-* -i *indirect command*
-* -c *configuration command*
-* -q *query command*
-
-  * [ARG1]
-  * -b *broadcast address*
-
-    * [ARG2] *dali command*
+* **[1]**
+  **-d** *direct ARC command*  
+  **-i** *indirect command*  
+  **-c** *configuration command*  
+  **-q** *query command*
+  * **[2]**    
+  -b *broadcast address*
+    * **[3]**  
+    *dali command*
 
   * [ARG1]  
   * -g *group address follow*
