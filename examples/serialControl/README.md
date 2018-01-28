@@ -45,7 +45,7 @@ See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW
 ### send DALI forward telegram
 **[1] [2] [3] [4]**
 
-* **[1]**
+* **[1]**  
   **-d** *direct ARC command*  
   **-i** *indirect command*  
   **-c** *configuration command*  
@@ -65,6 +65,6 @@ See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW
 
       * [ARG4] *dali command*
 
-* [ARG0]
-* -x *special command*
-  * [ARG2] [ARG3] *Please refer to the DALI specification for details on the commands*
+* [1]  
+**-x** *dali special command*
+  * **[2] [3]** *Please refer to the DALI specification for details on the commands*
