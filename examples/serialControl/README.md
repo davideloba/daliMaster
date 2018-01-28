@@ -7,7 +7,7 @@ Here there is a list of commands that you can send to your Arduino™ through se
 Load the program *serialControl.ino* under *examples/* folder, open serial monitor and set baudrate to 115000. Write your command in the upper form and press return to send it. Remember that you can send up to 4 arguments at a time. The program will echo the received command and if it is correct it will be execute.
 
 ### I2C bus scan
-**-s**
+**-s**  
 scan I2C bus and report if any I2C devices has been found and their address. Default daliMaster address is 35 (0x23).
 ```
 -s
