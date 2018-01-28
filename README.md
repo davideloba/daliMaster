@@ -1,6 +1,6 @@
 # daliMaster
 
-This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](www.ebay.d) shield, with buit-in DALI bus supply system. b:boom::boom:m!
+This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](www.ebay.d) shield, with buit-in DALI bus power supply system. b:boom::boom:m!
 
 ## Description
 
@@ -51,7 +51,7 @@ Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simpl
 See more informations about serial commands [here](/) and [here](daliCommands.h). See also the following links to know more about DALI and LW14 commands.
 
 ## Useful links
- 
+
 ### LW14
 * [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf)
 
