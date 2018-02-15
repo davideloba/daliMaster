@@ -66,6 +66,7 @@ bool DALIMASTER::setNewAddr(uint8_t addr){
 bool DALIMASTER::regRead(uint8_t addr, uint8_t *data){
 
 	uint8_t length = 0;
+	memset(data,0,sizeof(data));
 
 	switch(addr){
 
@@ -91,7 +92,7 @@ bool DALIMASTER::directCmd(uint8_t addr, uint8_t arc){
    //direct arc power control command (E.4.3.3.1.1)
   switch(arc){
 
-  case 0 ... 255:{
+  case 0 ... 255:{ //TODO: 254 maybe?
 	  return cmdSend(addr, arc);
   }break;
 
@@ -136,7 +137,7 @@ bool DALIMASTER::configCmd(uint8_t addr, uint8_t cmd){
 }
 
 bool DALIMASTER::queryCmd(uint8_t addr, uint8_t cmd){
-	//configuration commands (E.4.3.3.3)
+	//query commands (E.4.3.3.3)
 	switch(cmd){
 
 	case 144 ... 255:{ //query commands

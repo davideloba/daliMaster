@@ -17,199 +17,175 @@ void setup();
 
 void loop() {
 
-	if(Serial.available() > 0){
+  if(Serial.available() > 0){
+    
+    delay(100); //wait a moment to fill buffer
 
-		delay(100); //wait a moment to fill buffer
+    char buf[MAX_SIZE+1];
+    uint8_t endBuf = Serial.readBytes(buf, MAX_SIZE);
+    flush();
 
-		char buf[MAX_SIZE+1];
-		uint8_t endBuf = Serial.readBytes(buf, MAX_SIZE);
-		flush();
+    buf[endBuf] = 0;
 
-		buf[endBuf] = 0;
+    char* cmd[MAX_CMD+1];
+    cmd[0] = strtok(buf, " "); //space separator
+    cmd[1] = strtok(NULL, " ");
+    cmd[2] = strtok(NULL, " ");
+    cmd[3] = strtok(NULL, " ");
 
-		char* cmd[MAX_CMD+1];
-		cmd[0] = strtok(buf, " "); //space separator
-		cmd[1] = strtok(NULL, " ");
-		cmd[2] = strtok(NULL, " ");
-		cmd[3] = strtok(NULL, " ");
+    //DEBUG
+    Serial.print(F("received cmd-> "));
+    for(int i = 0; i < MAX_CMD; i++){
+      Serial.print("\'");
+      Serial.print(cmd[i]);
+     Serial.print("\',");
+    }
+    Serial.println();
 
-		//DEBUG
-		Serial.print(F("received cmd--> "));
-		for(int i = 0; i < MAX_CMD; i++){
-			Serial.print("..");
-			Serial.print(cmd[i]);
-		}
-		Serial.println();
+    bool res = false;
 
-		bool res = false;
+    if(!strcmp(cmd[0],"-s")){ //scan i2c bus
 
-		if(!strcmp(cmd[0],"-s")){ //scan i2c bus
+      Serial.println(F("scanning i2c bus.."));
 
-			Serial.println(F("scan i2c bus.."));
+      uint8_t devices = 0;
+      res = master.scanI2cBus(devices);
+      Serial.print(F("i2c devices found: "));
+      Serial.println(devices);
 
-			uint8_t devices = 0;
-			res = master.scanI2cBus(devices);
-			Serial.print(F("i2c devices found: "));
-			Serial.println(devices);
+    }else if(!strcmp(cmd[0],"-a")){ //-a [new i2c address] set new address to lw14
 
-		}else if(!strcmp(cmd[0],"-a")){ //-a [new i2c address] set new address to lw14
+      Serial.println(F("setting new i2c address to lw14.."));
+      res = master.setNewAddr(atoi(cmd[1]));
 
-			Serial.println(F("setting new i2c address to lw14.."));
-			int16_t addr = atoi(cmd[1]);
+    }else if(!strcmp(cmd[0],"-r")){ //-r [reg address] read lw14 register
 
-			if(addr <= 0 | addr >= 128){
-				Serial.println(F("new address out of range!"));
-			}else{
-				res = master.setNewAddr(addr);
-			}
+      Serial.println(F("reading lw14 register.."));
 
-		}else if(!strcmp(cmd[0],"-r")){ //-r [reg address] read lw14 register
+      uint8_t data[LW14_REG_SIGNATURE_LENGTH]; //max reg length
+      memset(data,0,sizeof(data));
 
-			Serial.println(F("reading lw14 register.."));
+      res = master.regRead(atoi(cmd[1]), data);
 
-			switch (atoi[cmd[1]]) {
+      if(res){
 
-				case LW14_REG_STATUS:
-				case LW14_REG_CMD:
-				case LW14_REG_SIGNATURE{
+        Serial.print(F("(0x"));
+        if(res < 16) Serial.print(F("0"));
+        Serial.print(atoi(cmd[1]), HEX);
+        Serial.print(F(")"));
 
-					uint8_t data[LW14_REG_SIGNATURE_LENGTH]; //max reg length
-					memset(data,0,sizeof(data));
-					res = master.regRead(atoi(cmd[1]), data);
+        switch(atoi(cmd[1])){
 
-				} break;
+          case LW14_REG_STATUS:
 
-				default:
-					Serial.println(F("wrong register address."));
-					return;
-			}
+            Serial.print(F(" Status reg"));
+            Serial.print(F(": "));
+            Serial.print(data[0]);
+            Serial.println(F(" --> "));
+            Serial.println(F("bit no.: 76543210"));
+           Serial.print(F("         "));
+            Serial.println(data[0], BIN);
 
-			if(res){
+            break;
 
-				Serial.print(F("(0x"));
-				if(res < 16) Serial.print(F("0"));
-				Serial.print(atoi(cmd[1]), HEX);
-				Serial.print(F(")"));
+          case LW14_REG_CMD:
 
-				switch(atoi(cmd[1])){
+            Serial.print(F(" Command reg: "));
+            Serial.print(data[0]);
+            Serial.print(F(".."));
+            Serial.println(data[1]);
 
-					case LW14_REG_STATUS:
+            break;
 
-						Serial.print(F(" Status reg"));
-						Serial.print(F(": "));
-						Serial.print(data[0]);
-						Serial.println(F(" --> bits no., values"));
-						Serial.println(F("76543210"));
-						Serial.println(data[0], BIN);
+          case LW14_REG_SIGNATURE:
 
-						break;
+            Serial.print(F(" Signature reg: "));
+            for(int i = 0; i < LW14_REG_SIGNATURE_LENGTH; i++){
+              Serial.print(data[i]);
+              Serial.print(F(".."));
+            }
+            Serial.println();
 
-					case LW14_REG_CMD:
+            break;
+        }
+      }
 
-						Serial.print(F(" Command reg: "));
-						Serial.print(data[0]);
-						Serial.print(F(".."));
-						Serial.println(data[1]);
+    }else{  //define and send DALI forward telegram
 
-						break;
+      uint8_t daliMode, daliAddr, daliCmd = 0;
+      daliMode = !strcmp(cmd[0],"-d")? LW14_MODE_DACP : LW14_MODE_CMD;
 
-					case LW14_REG_SIGNATURE:
+      if(strcmp(cmd[0],"-x")){ //do this just for non-special(x) cmd
 
-						Serial.print(F(" Signature reg: "));
-						for(int i = 0; i < LW14_REG_SIGNATURE_LENGTH; i++){
-							Serial.print(data[i]);
-							Serial.print(F(".."));
-						}
-						Serial.println();
+        if(!strcmp(cmd[1],"-s")){
 
-						break;
-				}
-			}
+          if(atoi(cmd[2]) < 0 || atoi(cmd[2]) > 63){
+            Serial.println(F("wrong short address"));
+            return;
+          }
 
-		}else{  //define and send DALI forward telegram
+          daliAddr = master.setShortAddress(atoi(cmd[2]),daliMode);
+          daliCmd = atoi(cmd[3]);
 
-			uint8_t daliMode, daliAddr, daliCmd = 0;
+        }else if(!strcmp(cmd[1],"-b")){
 
-			//->SET ADDRESS AND GRAB COMMAND
-			daliMode = !strcmp(cmd[0],"-d")? LW14_MODE_DACP : LW14_MODE_CMD;
+          daliAddr = master.setBroadcastAddress(daliMode);
+          daliCmd = atoi(cmd[2]);
 
-			if(strcmp(cmd[0],"-x")){ //do this just for non-special(NOT -x) cmd
+        }else if(!strcmp(cmd[1],"-g")){
 
-					if(!strcmp(cmd[1],"-s")){
+          if(atoi(cmd[2]) < 0 || atoi(cmd[2]) > 15){
+            Serial.println(F("wrong group address"));
+            return;
+          }
 
-						if(atoi(cmd[2]) < 0 || atoi(cmd[2]) > 63){
-							Serial.println(F("wrong short address"));
-							return;
-						}
+          daliAddr = master.setGroupAddress(atoi(cmd[2]),daliMode);
+          daliCmd = atoi(cmd[3]);
 
-						daliAddr = master.setShortAddress(atoi(cmd[2]),daliMode);
-						daliCmd = atoi(cmd[3]);
+        }else{
 
-					}else if(!strcmp(cmd[1],"-b")){
+          Serial.println(F("wrong recipient type"));
+          return;
+        }
+      }
 
-						daliAddr = master.setBroadcastAddress(daliMode);
-						daliCmd = atoi(cmd[2]);
+      if(!strcmp(cmd[0],"-d")){ //direct arc power command
 
-					}else if(!strcmp(cmd[1],"-g")){
+        Serial.println(F("direct arc power command"));
+        res = master.directCmd(daliAddr, daliCmd);
 
-						if(atoi(cmd[2]) < 0 || atoi(cmd[2]) > 15){
-							Serial.println(F("wrong group address"));
-							return;
-						}
+      }else if(!strcmp(cmd[0],"-i")){ //indirect arc power command
+        Serial.println(F("indirect arc power command"));
+        res = master.indirectCmd(daliAddr, daliCmd);
 
-						daliAddr = master.setGroupAddress(atoi(cmd[2]),daliMode);
-						daliCmd = atoi(cmd[3]);
+      }else if(!strcmp(cmd[0],"-c")){ //configuration command
+        Serial.println(F("configuration command"));
+        res = master.configCmd(daliAddr, daliCmd);
 
-					}else{
+      }else if(!strcmp(cmd[0],"-q")){//query command
+        Serial.println(F("query command"));
+        res = master.queryCmd(daliAddr, daliCmd);
+        if(res)
+          Serial.println(F("(now you should read Command reg(0x01) to see the response)"));
 
-						Serial.println(F("wrong recipient type"));
-						return;
-					}
-			}
+      }else if(!strcmp(cmd[0],"-q")){//special command
+        Serial.println(F("special command"));
+        res = master.specialCmd(atoi(cmd[1]), atoi(cmd[2])); //use original cmd
 
-			//->SEND COMMAND
-			if(!strcmp(cmd[0],"-d")){ //direct arc power command
-
-					Serial.println(F("direct arc power command"));
-					res = master.directCmd(daliAddr, daliCmd);
-
-			}else if(!strcmp(cmd[0],"-i")){ //indirect arc power command
-
-					Serial.println(F("indirect arc power command"));
-					res = master.indirectCmd(daliAddr, daliCmd);
-
-			}else if(!strcmp(cmd[0],"-c")){ //configuration command
-
-					Serial.println(F("configuration command"));
-					res = master.configCmd(daliAddr, daliCmd);
-
-			}else if(!strcmp(cmd[0],"-q")){//query command
-
-					Serial.println(F("query command"));
-					res = master.queryCmd(daliAddr, daliCmd);
-					if(res)
-						Serial.println(F("(now you should read Command reg(0x01) to see the response)"));
-
-			}else if(!strcmp(cmd[0],"-x")){//special command
-
-					Serial.println(F("special command"));
-					res = master.specialCmd(atoi(cmd[1]), atoi(cmd[2])); //use original cmd
-
-			}else{
-
-					Serial.println(F("wrong command"));
-					return;
-			}
-		}
+      }else{
+        Serial.println(F("wrong command"));
+        return;
+      }
+    }
 
 
-		if(res){
-			Serial.println(F("done."));
-		}else{
-			Serial.println(F("error."));
-		}
+    if(res){
+      Serial.println(F("done."));
+    }else{
+      Serial.println(F("error."));
+    }
 
-	}
+  }
 
 
 } //end of loop
@@ -217,17 +193,20 @@ void loop() {
 //---functions
 
 void flush(){
-	while(Serial.available()>0) Serial.read();
+  while(Serial.available()>0) Serial.read();
 }
 
 
 void setup() {
 
-	Wire.begin();
-	Serial.begin(BAUDRATE);
-	Serial.setTimeout(1); //useful
-		delay(1000);
-	Serial.println("Start..");
+  Wire.begin();
+  Serial.begin(BAUDRATE);
+  Serial.setTimeout(1); //useful
+    delay(1000);
+  Serial.println("Start..");
 
-	master.begin(LW14_I2CADR);
+  master.begin(LW14_I2CADR);
 }
+
+
+
