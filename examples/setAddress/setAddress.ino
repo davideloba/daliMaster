@@ -6,9 +6,10 @@
  */
 
 #include <daliMaster.h>
+#define TIMEOUT 2000
 
-uint8_t data[LW14_REG_CMD_LENGTH];
-uint8_t daliAddr;
+uint8_t myData[LW14_REG_CMD_LENGTH];
+uint32_t previous = 0;
 
 DALIMASTER master;
 
@@ -25,7 +26,6 @@ void loop() {
 		flush(); //needed
 
 		uint16_t daliSa = buf.toInt();
-
 		bool res = false;
 
 		switch (daliSa) {
@@ -34,7 +34,7 @@ void loop() {
 
 				Serial.print(F("This command will assign \'"));
 				Serial.print(daliSa);
-				Serial.print(F("\' as new address with a broadcasted command."));
+				Serial.println(F("\' as new address with a broadcasted command."));
 				Serial.println(F("Be sure that just one ballast will receive it. Continue? (digit \"Y\" for YES)"));
 
 				while(true){ //wait for Y
@@ -45,7 +45,7 @@ void loop() {
 
 						String buf = Serial.readStringUntil('\n');
 
-						if(buf.equals("Y") | buf.equals("y") ){
+						if(buf.indexOf('Y') != -1 | buf.indexOf('y') != -1){
 
 							/*
 							60929 © IEC:2006
@@ -54,57 +54,99 @@ void loop() {
 							verify the content of the DTR and send command 128 "STORE DTR AS SHORT ADDRESS" two times.
 							*/
 
-							daliAddr = master.setBroadcastAddress(LW14_MODE_CMD);
+              uint8_t dtr = master.setShortAddress(daliSa, LW14_MODE_CMD); //DTR structure 0AAA AAA1
+              uint8_t broadcastAddr = master.setBroadcastAddress(LW14_MODE_CMD);
 
-							//store address in DTR.
-							if(!master.specialCmd(DALI_CMD_DTR, newAddr))
-								return;
+              Serial.println(F("\r\n---> Store new address into DTR <---")); //DEBUG
+              
+							if(!master.regClean() | !master.specialCmd(DALI_CMD_STORE_DTR, dtr)){
+                Serial.println(F("unable to set DTR!"));
+                break;
+              }
+              
+              if(!master.waitForIdle(TIMEOUT)){
+								Serial.println(F("idle timeout!")); //DEBUG
+								break;
+							}
 
-							//read it back and check it.
-							if(!master.queryCmd(daliAddr, DALI_CMD_QUERY_DTR))
-								return;
+              Serial.println(F("\r\n---> Read DTR back and check it again.. <---")); //DEBUG
 
-							if(!master.regRead(LW14_REG_CMD, data))
-								return;
+							if(!master.regClean() | !master.queryCmd(broadcastAddr, DALI_CMD_QUERY_DTR)){
+                Serial.println(F("unable to read DTR back!"));
+                break;
+              }
 
-							if(data[0] != newAddr)
-								return;
+              if(!master.waitForTel1(TIMEOUT)){
+                Serial.println(F("telegram timeout!")); //DEBUG
+                break;
+              }
+              
+							if(!master.regRead(LW14_REG_CMD, myData) | myData[0] != dtr){
+								Serial.println(F("DTR does not match!")); //DEBUG
+								break;
+							}
 
-							//store DTR as new address.
-							if(!master.configCmd(daliAddr, DALI_CMD_STORE_DTR_SA))
-								return;
+							Serial.println(F("\r\n--> DTR match! Now save as new address <--")); //DEBUG
 
-							//ask lamp if missing short address or not.
-							if(!master.queryCmd(daliAddr, DALI_CMD_QUERY_BALLAST))
-								return;
+							if(!master.configCmd(broadcastAddr, DALI_CMD_STORE_DTR_SA))
+								break;
 
-							if(!master.regRead(LW14_REG_CMD, data))
-								return;
+							if(!master.waitForIdle(TIMEOUT)){
+								Serial.println(F("idle timeout!")); //DEBUG
+								break;
+							}
 
-							if(data[0] != DALI_YES)
-								return;
+              Serial.println(F("\r\n--> Ask if there is a ballast with the given address that is able to communicate <--")); //DEBUG
 
+							if(!master.regClean() | !master.queryCmd(master.setShortAddress(daliSa, LW14_MODE_CMD), DALI_CMD_QUERY_BALLAST))
+								break;
+
+							if(!master.waitForTel1(TIMEOUT)){
+								Serial.println(F("telegram timeout!")); //DEBUG
+								break;
+							}
+
+							if(!master.regRead(LW14_REG_CMD, myData) | myData[0] != DALI_YES)
+								break;
+
+              Serial.println(F("\r\n--> Well, now make it flash! <--")); //DEBUG
+
+              master.indirectCmd(master.setShortAddress(daliSa, LW14_MODE_CMD), DALI_CMD_OFF);
+              master.waitForBus(TIMEOUT);
+                delay(200);
+              master.indirectCmd(master.setShortAddress(daliSa, LW14_MODE_CMD), DALI_CMD_MAX_LEVEL);
 							res = true;
-
+              
+             // break; //exit while(true);
+             
 						}
+						
+						/*else{
+              break;
+						}*/
 
-					}
-				}
+            break;
 
-      }break;
+					} //end of if Serial is available
+				} //end of while(true)
+
+      } break;
 
 			default:
 
-				Serial.print(F("wrong DALI short address. "));
+				Serial.println(F("wrong DALI short address. "));
 
 		} //end of switch
 
 		if(res){
-			Serial.println(F("New address assigned and verified. Done."));
+			Serial.println(F("\r\n--> New address assigned and verified. Done. <--"));
+      Serial.println();
 		}else{
-			Serial.println(F("Error."));
+			Serial.println(F("\r\n--> Error. <--"));
+      Serial.println();
 		}
 
+    Serial.println(F("Digit address to set (0-63) to repate the procedure."));
 		flush();
 	}
 
@@ -130,6 +172,5 @@ void setup() {
 		exit(1);
 	}
 
-	delay(2000);
-	Serial.println("Digit address to set (0-63):");
+  Serial.println("Digit address to set (0-63):");
 }

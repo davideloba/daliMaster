@@ -47,7 +47,6 @@
 
 //DALI stuff
 #define DALI_BUS_TIMEOUT						2000
-#define TWICE								2
 #define MAX_LAMPS_NUM							64
 #define DELETE_SA							255U
 #define DALI_YES							255U
@@ -122,6 +121,17 @@ private:
 	bool i2cRead(uint8_t, uint8_t, uint8_t, uint8_t *);
 	bool i2cWrite(uint8_t, uint8_t, uint8_t, uint8_t *);
 
+	/*
+	 *
+	 * print every single bit
+	 * of one byte num
+	 * useful to print lw14 status register
+	 *
+	 */
+
+	void printStatusBits(uint8_t);
+	void printBits(uint8_t);
+
 
 /*_____________________________public____________________________*/
 
@@ -161,6 +171,19 @@ public:
 	 *
 	 */
 	bool regRead(uint8_t, uint8_t *);
+	bool regClean();
+
+	/*
+	 * Wait for a free bus
+	 * Wait for status regs of 0
+	 * or wait for an incoming 1 byte telegram
+	 * or wait for an incoming 2 byte telegram
+	 */
+	 bool waitForBus(uint16_t);
+	 bool waitForIdle(uint16_t);
+	 bool waitForTel1(uint16_t);
+ 	 bool waitForTel2(uint16_t);
+
 
 	/*
 	 *
@@ -178,6 +201,13 @@ public:
 	bool queryCmd(uint8_t, uint8_t);
 
 	bool specialCmd(uint8_t, uint8_t);
+
+	/*
+	*
+	*	print LW14 registers
+	*
+	*/
+	void printReg(uint8_t, uint8_t *);
 
 	/*
 	*

@@ -5,6 +5,8 @@
  *      Author: davideloba
  */
 
+//------ TODO: al posto di usare la strcmp USA LA funzione string.equals!!!!!
+
 #include <daliMaster.h>
 
 #define MAX_SIZE 20 //without NULL char
@@ -18,7 +20,7 @@ void setup();
 void loop() {
 
   if(Serial.available() > 0){
-    
+
     delay(100); //wait a moment to fill buffer
 
     char buf[MAX_SIZE+1];
@@ -143,7 +145,6 @@ void loop() {
           daliCmd = atoi(cmd[3]);
 
         }else{
-
           Serial.println(F("wrong recipient type"));
           return;
         }
@@ -168,7 +169,7 @@ void loop() {
         if(res)
           Serial.println(F("(now you should read Command reg(0x01) to see the response)"));
 
-      }else if(!strcmp(cmd[0],"-q")){//special command
+      }else if(!strcmp(cmd[0],"-x")){//special command
         Serial.println(F("special command"));
         res = master.specialCmd(atoi(cmd[1]), atoi(cmd[2])); //use original cmd
 
@@ -207,6 +208,3 @@ void setup() {
 
   master.begin(LW14_I2CADR);
 }
-
-
-

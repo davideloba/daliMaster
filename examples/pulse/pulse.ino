@@ -24,18 +24,16 @@ void setup() {
 
 void loop() {
 
-  for(int i = 254; i > 100; i--){
+  for(int i = 254; i > 150; i--){
 
-    if(!master.directCmd(daliAddr, i))
+    if(!master.waitForBus(DALI_BUS_TIMEOUT) | !master.directCmd(daliAddr, i))
       Serial.println(F("error."));
   }
 
-  for(int i = 100; i < 255; i++){
-   
-   if(!master.directCmd(daliAddr, i))
+  for(int i = 150; i < 255; i++){
+
+   if(!master.waitForBus(DALI_BUS_TIMEOUT) | !master.directCmd(daliAddr, i))
       Serial.println(F("error."));
   }
 
 } //end of loop
-
-

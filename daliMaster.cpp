@@ -66,27 +66,110 @@ bool DALIMASTER::setNewAddr(uint8_t addr){
 bool DALIMASTER::regRead(uint8_t addr, uint8_t *data){
 
 	uint8_t length = 0;
-	memset(data,0,sizeof(data));
 
 	switch(addr){
-
-	case LW14_REG_STATUS:
-		length = LW14_REG_STATUS_LENGTH;
-		break;
-	case LW14_REG_CMD:
-		length = LW14_REG_CMD_LENGTH;
-		break;
-	case LW14_REG_SIGNATURE:
-		length = LW14_REG_SIGNATURE_LENGTH;
-		break;
-	default:
-		Serial.println(F("wrong register address"));
-		return false;
+		case LW14_REG_STATUS:
+			length = LW14_REG_STATUS_LENGTH;
+			break;
+		case LW14_REG_CMD:
+			length = LW14_REG_CMD_LENGTH;
+			break;
+		case LW14_REG_SIGNATURE:
+			length = LW14_REG_SIGNATURE_LENGTH;
+			break;
+		default:
+			Serial.println(F("wrong register address"));
+			return false;
 	}
+
+	memset(data,0,length);
 
 	return lw14Read(addr, length, data);
 }
 
+
+bool DALIMASTER::regClean(){
+
+	uint8_t dummy[LW14_REG_CMD_LENGTH];
+	memset(dummy,0,LW14_REG_CMD_LENGTH);
+	return lw14Read(LW14_REG_CMD, LW14_REG_CMD_LENGTH, dummy);
+}
+
+
+bool DALIMASTER::waitForBus(uint16_t timeout){
+
+	uint8_t status[LW14_REG_STATUS_LENGTH];
+	memset(status,0,LW14_REG_STATUS_LENGTH);
+	uint32_t previous = millis();
+
+	while(millis() - previous < timeout){ //wait until bus is free
+
+		if(this->regRead(LW14_REG_STATUS,status)
+		& bitRead(status[0], LW14_STATUS_BUS_BUSY) == 0
+		& bitRead(status[0], LW14_STATUS_BUS_ERROR) == 0)
+			return true;
+
+		//this->printReg(LW14_REG_STATUS, status); //DEBUG
+	}
+
+	return false;
+}
+
+bool DALIMASTER::waitForTel1(uint16_t timeout){
+
+	uint8_t status[LW14_REG_STATUS_LENGTH];
+	memset(status,0,LW14_REG_STATUS_LENGTH);
+	uint32_t previous = millis();
+
+	while(millis() - previous < timeout){ //wait until all bits of status reg == 0
+
+		if(this->regRead(LW14_REG_STATUS,status)
+			& bitRead(status[0], LW14_STATUS_VALID_REPLY)
+			& bitRead(status[0], LW14_STATUS_1_BYTE_TELEGRAM))
+			return true;
+
+		//this->printReg(LW14_REG_STATUS, status); //DEBUG
+	}
+
+	return false;
+}
+
+bool DALIMASTER::waitForTel2(uint16_t timeout){
+
+	uint8_t status[LW14_REG_STATUS_LENGTH];
+	memset(status,0,LW14_REG_STATUS_LENGTH);
+	uint32_t previous = millis();
+
+	while(millis() - previous < timeout){ //wait until all bits of status reg == 0
+
+		if(this->regRead(LW14_REG_STATUS,status)
+			& bitRead(status[0], LW14_STATUS_VALID_REPLY)
+			& bitRead(status[0], LW14_STATUS_2_BYTE_TELEGRAM))
+			return true;
+
+		//this->printReg(LW14_REG_STATUS, status); //DEBUG
+	}
+
+	return false;
+}
+
+
+bool DALIMASTER::waitForIdle(uint16_t timeout){
+
+	uint8_t status[LW14_REG_STATUS_LENGTH];
+	memset(status,0,LW14_REG_STATUS_LENGTH);
+	uint32_t previous = millis();
+
+	while(millis() - previous < timeout){ //wait until all bits of status reg == 0
+		if(this->regRead(LW14_REG_STATUS,status)
+			& status[0] == 0)
+			return true;
+
+		//this->printReg(LW14_REG_STATUS, status); //DEBUG
+	}
+
+	return false;
+}
 
 bool DALIMASTER::directCmd(uint8_t addr, uint8_t arc){
    //direct arc power control command (E.4.3.3.1.1)
@@ -166,6 +249,58 @@ bool DALIMASTER::specialCmd(uint8_t cmd1, uint8_t cmd2){
 	//or return cmdSendTwice(cmd_1, cmd_2);
 }
 
+void DALIMASTER::printReg(uint8_t addr, uint8_t *data){
+
+	switch(addr){
+		case LW14_REG_STATUS:
+		case LW14_REG_CMD:
+		case LW14_REG_SIGNATURE:
+		break;
+		default:
+			Serial.println(F("wrong register address"));
+			return;
+	}
+
+	 Serial.print(F("(0x"));
+	 if(addr < 16) Serial.print(F("0"));
+	 Serial.print(addr, HEX);
+	 Serial.print(F(")"));
+
+	 switch(addr){
+
+		 case LW14_REG_STATUS:
+
+			 Serial.print(F(" Status reg"));
+			 Serial.print(F(": "));
+			 Serial.print(data[0]);
+			 Serial.println(F(" ->bits"));
+			 this->printStatusBits(data[0]);
+
+			 break;
+
+		 case LW14_REG_CMD:
+
+			 Serial.print(F(" Command reg: "));
+				for(int i = 0; i < LW14_REG_CMD_LENGTH; i++){
+					Serial.print(data[i]);
+					Serial.print("..");
+				}
+
+			 break;
+
+		 case LW14_REG_SIGNATURE:
+
+			 Serial.print(F(" Signature reg: "));
+			 for(int i = 0; i < LW14_REG_SIGNATURE_LENGTH; i++){
+				 Serial.print(data[i]);
+				 Serial.print(F(".."));
+			 }
+			 Serial.println();
+
+			 break;
+	 }
+}
+
 uint8_t DALIMASTER::setBroadcastAddress(unsigned char mode){
 	return (0xFE | mode);
 }
@@ -197,9 +332,15 @@ void DALIMASTER::setDevice(uint8_t setMe){
 
 bool DALIMASTER::cmdSendTwice(uint8_t addr, uint8_t command){
 
-	for(uint8_t i = 0; i < TWICE; i++){
-		if(!cmdSend(addr, command)) return false;
-	}
+	if(!cmdSend(addr, command))
+		return false;
+
+	if(!this->waitForBus(100)) //100ms should be the max interval between
+		return false;
+
+	if(!cmdSend(addr, command))
+		return false;
+
 	return true;
 }
 
@@ -211,21 +352,20 @@ bool DALIMASTER::cmdSend(uint8_t addr, uint8_t command){
 
 bool DALIMASTER::lw14Write(uint8_t data1, uint8_t data2){
 
-	uint8_t data[] = { data1, data2 }; //2 byte commands
+	uint8_t telegram[] = { data1, data2 }; //2 byte commands
 
-    //DEBUG
-    Serial.print(F("dali telegram --> byte 1: "));
-    Serial.print(data[0]);
-    Serial.print(F("("));
-    Serial.print(data[0], BIN);
-    Serial.print(F("), byte 2: "));
-    Serial.print(data[1]);
-    Serial.print(F("("));
-	Serial.print(data[1], BIN);
+  Serial.print(F("dali telegram --> byte 1: "));
+  Serial.print(telegram[0]);
+  Serial.print(F("("));
+	this->printBits(telegram[0]);
+  Serial.print(F("), byte 2: "));
+  Serial.print(telegram[1]);
+  Serial.print(F("("));
+	this->printBits(telegram[1]);
 	Serial.print(F(")"));
 	Serial.println();
 
-    return i2cWrite(this->device, LW14_REG_CMD, 2, &data[0]) ;
+  return i2cWrite(this->device, LW14_REG_CMD, 2, telegram) ;
 }
 
 
@@ -285,8 +425,6 @@ bool DALIMASTER::i2cRead(uint8_t device, uint8_t addr, uint8_t length, uint8_t *
 	if(Wire.available()){
 		for(int i = 0; i < length; i++){
 			data[i] = Wire.read();
-
-			Serial.println(data[i]); //Debug
 		}
 	}else{
 		Wire.endTransmission();
@@ -295,4 +433,25 @@ bool DALIMASTER::i2cRead(uint8_t device, uint8_t addr, uint8_t length, uint8_t *
 
 	Wire.endTransmission();
 	return true;
+}
+
+
+void DALIMASTER::printStatusBits(uint8_t myByte){
+
+	//Serial.println(F("\tno.\t7\t6\t5\t4\t3\t2\t1\t0"));
+	Serial.println(F("\tcode.\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL"));
+
+	Serial.print(F("\tvalue\t"));
+	for(int i = 7; i >= 0; i--){
+		Serial.print(bitRead(myByte,i));
+		Serial.print(F("\t"));
+	}
+
+	Serial.println();
+}
+
+void DALIMASTER::printBits(uint8_t myByte){
+	for(int i = 7; i >= 0; i--){
+		Serial.print(bitRead(myByte,i));
+	}
 }
