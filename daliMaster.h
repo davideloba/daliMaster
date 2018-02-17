@@ -13,7 +13,7 @@
 #define MAX_CHARS 							10U
 
 //default I2C address
-#define LW14_I2CADR         						0x23U
+#define LW14_DEF_ADDR         						0x23U
 
 #define LW14_I2C_DELAY 	    						2000 //us
 
@@ -25,7 +25,7 @@
 #define LW14_REG_STATUS 						0x00
 #define LW14_REG_CMD    						0x01
 #define LW14_REG_CONFIG 						0x02
-#define LW14_REG_SIGNATURE 						0xF0
+#define LW14_REG_SIGNATURE 					0xF0
 #define LW14_REG_ADDR   						0xFE
 
 //register length

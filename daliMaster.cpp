@@ -7,7 +7,7 @@ bool DALIMASTER::begin(const int16_t &myDevice){
 
 	Serial.println(F("i2c master begin.."));
 
-	if(myDevice < 0 || myDevice > 127){
+	if(myDevice < 1 || myDevice > 127){
 		Serial.println(F("wrong device address!"));
 		return false;
 	}
@@ -30,7 +30,7 @@ uint8_t DALIMASTER::scanI2cBus(uint8_t & numDev){
 	numDev = 0;
 	uint8_t i, res = 0;
 
-	for(i = 0; i < 127; i++){
+	for(i = 1; i < 127; i++){
 
 	   Wire.beginTransmission(i);
 	   res = Wire.endTransmission();
@@ -41,6 +41,9 @@ uint8_t DALIMASTER::scanI2cBus(uint8_t & numDev){
 		   if(i < 16)
 			   Serial.print(F("0"));
 		   Serial.print(i, HEX);
+			 Serial.print(F(" ("));
+			 Serial.print(i);
+			 Serial.print(F(")"));
 		   Serial.println();
 		   numDev++;
 	   }
@@ -57,9 +60,8 @@ bool DALIMASTER::setNewAddr(uint8_t addr){
 		return false;
 	}
 
-    //negated addr value to check by the chip
-    unsigned char data[] = {(unsigned char) addr, (unsigned char) ~(addr)};
-    return i2cWrite(this->device, LW14_REG_ADDR, 2, &data[0]);
+  uint8_t data[] = {addr, (uint8_t)~addr}; //negated addr value to check by the chip
+  return i2cWrite(this->device, LW14_REG_ADDR, LW14_REG_ADDR_LENGTH, data);
 }
 
 
@@ -175,7 +177,7 @@ bool DALIMASTER::directCmd(uint8_t addr, uint8_t arc){
    //direct arc power control command (E.4.3.3.1.1)
   switch(arc){
 
-  case 0 ... 255:{ //TODO: 254 maybe?
+  case 0 ... 254:{
 	  return cmdSend(addr, arc);
   }break;
 
@@ -365,7 +367,7 @@ bool DALIMASTER::lw14Write(uint8_t data1, uint8_t data2){
 	Serial.print(F(")"));
 	Serial.println();
 
-  return i2cWrite(this->device, LW14_REG_CMD, 2, telegram) ;
+  return i2cWrite(this->device, LW14_REG_CMD, LW14_REG_CMD_LENGTH, telegram) ;
 }
 
 
@@ -387,6 +389,12 @@ bool DALIMASTER::i2cWrite(uint8_t device, uint8_t addr, uint8_t length, uint8_t 
 
 	for(int i = 0; i < length; i++){
 		Wire.write(data[i]); //write 1 byte each time
+		/*
+		Serial.print(data[i]);
+		Serial.print("->\t");
+		this->printBits(data[i]);
+		Serial.println();
+		*/
 	}
 
 	switch(Wire.endTransmission()){
