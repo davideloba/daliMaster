@@ -24,7 +24,7 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
   * Connect your lamps to their ballasts
   * Connect your ballast to mains..be careful!
   * Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
-  * Connect your 24V DC power supply to mains and to [daliMaster](www.ebay.d)..again, be careful! [daliMaster](www.ebay.d) shield will do the rest in order to power DALI bus.
+  * Connect your 24V DC power supply to mains and to [daliMaster](www.ebay.d)..again, be careful!
 
 * If I'm right, now you should have all of lamps on. Let's turn them off.
 
@@ -32,17 +32,21 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
 
 * Download this library and load **daliMaster/examples/serialControl.ino**
 
- * Now open serial monitor, select 115000 as baudrate and write:
+  * Now open serial monitor, select 115000 as baudrate and you should see:
 ```
 -b 0 0
 ```
-If everything went well your lamps now are off. But we don't like darkness, so let's switch them on to the minimum:
+ * Well, write and send this command:
 ```
--b 0 1
+-d -b 0
 ```
-Cool! Let's push them to maximum:
+  * If everything went well your lamps now are off. But we don't like darkness, so let's switch them on to the minimum:
 ```
--b 0 254
+-d -b 1
+```
+  * Cool! Let's push them to maximum:
+```
+-d -b 254
 ```
 Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simple commands. :thumbsup:
 
