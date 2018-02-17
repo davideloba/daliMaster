@@ -161,5 +161,5 @@ void setup() {
     delay(1000);
   Serial.println("daliMaster start..");
 
-  master.begin(LW14_DEF_ADDR);
+  master.begin(23);
 }

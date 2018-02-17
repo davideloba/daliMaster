@@ -54,7 +54,7 @@ Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simpl
 
 ## Next
 
-See more informations about serial commands [here](examples/serialControl/README.MD). See also the following links to know more about DALI and LW14 commands.
+See more informations about serial commands [here](/examples/serialControl/README.MD). See other example to test your lamps. See also the following links to know more about DALI and LW14 commands.
 
 ## Useful links
 
