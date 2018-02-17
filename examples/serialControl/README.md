@@ -4,7 +4,7 @@ Here there is a list of commands that you can send to your Arduino™ through se
 
 ## Getting started
 
-Load the program *serialControl.ino* under *examples/* folder, open serial monitor and set baudrate to 115000. Write your command in the upper form and press return to send it. Remember that you can send up to 4 arguments at a time. The program will echo the received command and if it is correct it will be execute.
+Load the program *serialControl.ino* under *examples* folder, open serial monitor and set baudrate to 115000. Write your command in the upper form and press return to send it. Remember that you can send up to 4 arguments at a time. The program will echo the received command and if it is correct it will be execute.
 ### Hello world
 ```
 daliMaster start..
@@ -12,6 +12,7 @@ i2c master begin..
 device(0x23) is ready!
 ```
 ### I2C bus scan
+
 **-s**  
 Scan I2C bus and report if any I2C devices has been found with their address. Default daliMaster address is 35 (0x23).
 ```
@@ -52,24 +53,39 @@ The command register has two bytes which directly represent the DALI command. Pl
 The signature register can be used to identify LW14 and get the revision information for the chips firmware.
 See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) for more details.
 
-#### register reading example
-In this example we will ask ballast its phisicaly minimun level, and read the response. First query lamp with short address 4 with DALI_CMD_QUERY_PHY_MIN code (154).
+#### Register reading example
+In this example we will ask ballast its phisicaly minimun level and read the response. First query lamp with short address 8 with DALI_CMD_QUERY_PHY_MIN code (154).
 ```
-**-q -s 4 154**
-add
+-q -s 8 154
+TODO
 ```
-Now if we read the (0x00) STATUS REGISTER we will find this response.
+Now if we read the (0x00) STATUS REGISTER we will find that a reply is available.
 ```
-**-r 0**
+-r 0
 add
 ```
 This register will change quickly after the query in this way.
-000
-000
-000
+```
+(0x00) Status reg: 0 ->bits
+\tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
+\tvalue\t0\t0\t0\t0\t0\t0\t0\t0
+```
+
+```
+(0x00) Status reg: 0 ->bits
+\tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
+\tvalue\t0\t0\t0\t0\t0\t0\t0\t0
+```
+
+```
+(0x00) Status reg: 0 ->bits
+\tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
+\tvalue\t0\t0\t0\t0\t0\t0\t0\t0
+```
+
 So we have a Valid reply and it is a one byte telegram. So read the (0x01) COMMAND REGISTER to get this telegram.  
 ```
-**-r 1**
+-r 1
 add
 ```
 So, ballast physical minimum is 170. Notice that even if DALI permits 254 levels, ballast cannot dim light under this value.
@@ -85,33 +101,34 @@ There are 3 types of addresses:
 **-d [ADDRESS] [LEVEL]**
 e.g.:
 ```
-**-d -s 6 200**
+-d -s 8 200
 ```
-Command ballast with address 6 to 200 arc power level.
+Command ballast with address 8 to 200 arc power level.
 e.g.:
 ```
-**-d -b 0**
+-d -b 0
 ```
-Command all ballast to 0 arc power level.
+Command all ballast to switch to 0.
 #### indirect command
 **-i [ADDRESS] [COMMAND]**
 e.g.:
 ```
-**-i -b 5**
+-i -b 5
 ```
 Set all ballast arc power levels to the "MAX LEVEL" without fading.
 #### configuration command
 **-c [ADDRESS] [COMMAND]**
 e.g.:
 ```
-**-c -s 9 5**
+-c -s 8 5
 ```
 #### query command
 **-q [ADDRESS] [COMMAND]**
 e.g.:
 ```
-**-q -s 9 5**
+-q -s 8 160
 ```
+Ballast will response with actual arc power level. To read the response, see register reading specifications.
 
 #### special command
 **-x [COMMAND] [COMMAND]** *Please refer to the DALI specification for details on the commands*

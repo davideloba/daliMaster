@@ -1,10 +1,3 @@
-/*
- * pulse.ino
- *
- *  Created on: 16 Sep 2017
- *      Author: davideloba
- */
-
 #include <daliMaster.h>
 DALIMASTER master;
 
@@ -35,5 +28,4 @@ void loop() {
    if(!master.waitForBus(DALI_BUS_TIMEOUT) | !master.directCmd(daliAddr, i))
       Serial.println(F("error."));
   }
-
-} //end of loop
+}
