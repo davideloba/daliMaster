@@ -78,8 +78,6 @@ See more informations about serial commands [here](/) and [here](daliCommands.h)
 
 * **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/33-led-warrior/270-led-warrior14-2)
 
-* **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/33-led-warrior/270-led-warrior14-2)
-
 see [credits.md](credits.md) file for details.
 
 ## License
