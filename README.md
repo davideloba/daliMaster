@@ -20,7 +20,7 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
 
 * Fit [daliMaster](www.ebay.d) on your Arduino™
 
-* Make connections (You can find an example schema [here](www.ebay.d))
+* Make connections (you can find an example [here](schema.jpeg))
   * Connect your lamps to their ballasts
   * Connect your ballast to mains..be careful!
   * Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
