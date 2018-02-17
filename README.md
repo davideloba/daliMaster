@@ -32,19 +32,21 @@ With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your
 
 * Download this library and load **daliMaster/examples/serialControl.ino**
 
-  * Now open serial monitor, select 115000 as baudrate and you should see:
+* Now open serial monitor, select 115000 as baudrate and you should see:
 ```
--b 0 0
+daliMaster start..
+i2c master begin..
+device(0x23) is ready!
 ```
- * Well, write and send this command:
+* Well, write and send this command:
 ```
 -d -b 0
 ```
-  * If everything went well your lamps now are off. But we don't like darkness, so let's switch them on to the minimum:
+* If everything went well your lamps now are off. But we don't like darkness, so let's switch them on to the minimum:
 ```
 -d -b 1
 ```
-  * Cool! Let's push them to maximum:
+* Cool! Let's push them to maximum:
 ```
 -d -b 254
 ```
