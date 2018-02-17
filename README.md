@@ -14,17 +14,17 @@ Well, the answer is YES.
 
 ### How?
 
-With [daliMaster](www.ebay.d)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com/en/). Let's make an example to explain how it works.
+With [daliMaster](http://www.ebay.com)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com/en/). Let's make an example to explain how it works.
 
 ## Getting Started
 
 * Fit [daliMaster](www.ebay.d) on your Arduino™
- 
+
 * Make connections (you can find an example [here](schema.jpeg))
   * Connect your lamps to their ballasts
   * Connect your ballast to mains..be careful!
-  * Connect your ballasts and [daliMaster](www.ebay.d) to DALI bus
-  * Connect your 24V DC power supply to mains and to [daliMaster](www.ebay.d)..again, be careful!
+  * Connect your ballasts and [daliMaster](http://www.ebay.com) to DALI bus
+  * Connect your 24V DC power supply to mains and to [daliMaster](http://www.ebay.com)..again, be careful!
 
 * If I'm right, now you should have all of lamps on. Let's turn them off.
 
@@ -54,7 +54,7 @@ Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simpl
 
 ## Next
 
-See more informations about serial commands [here](/) and [here](daliCommands.h). See also the following links to know more about DALI and LW14 commands.
+See more informations about serial commands [here](examples/serialControl/README.MD). See also the following links to know more about DALI and LW14 commands.
 
 ## Useful links
 
