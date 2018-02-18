@@ -75,8 +75,8 @@ Now if we read the (0x00) STATUS REGISTER we will find that a reply is available
 received cmd-> -r,0,,,
 reading lw14 register..
 (0x00) Status reg: 41 ->bits
-  code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
-	value	0  0	0 0 1 0 0 1
+  code.  BUS BUSY OVER ERR	REPLY	TIME	2TEL	1TEL
+	value  0   0	  0    0    1     0     0     1
 done.
 ```
 This register will change quickly after the query in this way.
@@ -87,7 +87,7 @@ value	0  1	0 0 0 0 0 0
 Busy = '1' indicates that the last command has not yet been transmitted. Any new command sent to register 1 will be ignored until the last command has been transmitted and the busy bit is cleared.
 ```
 code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
-value	0  0	0 0 0 1 0 0
+value	0  0  0 0 0 1 0 0
 ```
 Time = 1 indicates that the time frame for a reply from the last addressed device has not yet timed out and is reset to zero after 22 Te (see DALI specification) or on bus activity.
 ```
