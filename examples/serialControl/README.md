@@ -84,20 +84,17 @@ This register will change quickly after the query in this way.
 code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
 value	0  1	0 0 0 0 0 0
 ```
-*Busy = '1' indicates that the last command has not yet been transmitted. Any new command sent to register 1 will be ignored until the last command has been transmitted and the busy bit is cleared.*
+Busy = '1' indicates that the last command has not yet been transmitted. Any new command sent to register 1 will be ignored until the last command has been transmitted and the busy bit is cleared.
 ```
 code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
 value	0  0	0 0 0 1 0 0
 ```
-*Time = 1 indicates that the time frame for a reply from the last addressed device has not yet timed out and is reset to zero after 22 Te (see DALI specification) or on bus activity.*
+Time = 1 indicates that the time frame for a reply from the last addressed device has not yet timed out and is reset to zero after 22 Te (see DALI specification) or on bus activity.
 ```
-code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
-value	0  0	0 0 1 0 0 1
+code. BUS BUSY  OVER  ERR REPLY TIME  2TEL  1TEL
+value 0 0	0 0 1 0 0 1
 ```
-*Valid Reply = 1 if a telegram has been received within 22 Te (see DALI specification) of sending a command.*
-
-
-*1Tel = 1 means that 1 byte telegram has been received. The bit is reset on reading register 0x01.*
+Valid Reply = 1 if a telegram has been received within 22 Te (see DALI specification) of sending a command. 1Tel = 1 means that 1 byte telegram has been received. The bit is reset on reading register 0x01.
 
 
 So we have a Valid reply and it is a one byte telegram. So read the (0x01) COMMAND REGISTER to get this telegram.  
@@ -118,36 +115,31 @@ There are 3 types of addresses:
 ### DALI forward telegram
 #### direct ARC command
 **-d [ADDRESS] [LEVEL]**
-e.g.:
 ```
 -d -s 8 200
 ```
 Command ballast with address 8 to 200 arc power level.
-e.g.:
 ```
 -d -b 0
 ```
-Command all ballast to switch to 0.
+Command all ballast to switch to 0 (off).
 #### indirect command
 **-i [ADDRESS] [COMMAND]**
-e.g.:
 ```
 -i -b 5
 ```
 Set all ballast arc power levels to the "MAX LEVEL" without fading.
 #### configuration command
 **-c [ADDRESS] [COMMAND]**
-e.g.:
 ```
--c -s 8 5
+-c -s 8 128
 ```
+Tell ballast 8 to store DTR as its short address.
 #### query command
 **-q [ADDRESS] [COMMAND]**
-e.g.:
 ```
 -q -s 8 160
 ```
 Ballast will response with actual arc power level. To read the response, see register reading specifications.
-
 #### special command
 **-x [COMMAND] [COMMAND]** *Please refer to the DALI specification for details on the commands*
