@@ -1,17 +1,8 @@
-/*
- * daliMaster.ino
- *
- *  Created on: 16 Sep 2017
- *      Author: davideloba
- */
-
 #include <daliMaster.h>
-#define TIMEOUT 2000
+DALIMASTER master;
 
 uint8_t myData[LW14_REG_CMD_LENGTH];
 uint32_t previous = 0;
-
-DALIMASTER master;
 
 void flush();
 void setup();
@@ -64,7 +55,7 @@ void loop() {
                 break;
               }
               
-              if(!master.waitForIdle(TIMEOUT)){
+              if(!master.waitForIdle(DALI_BUS_TIMEOUT)){
 								Serial.println(F("idle timeout!")); //DEBUG
 								break;
 							}
@@ -76,7 +67,7 @@ void loop() {
                 break;
               }
 
-              if(!master.waitForTel1(TIMEOUT)){
+              if(!master.waitForTel1(DALI_BUS_TIMEOUT)){
                 Serial.println(F("telegram timeout!")); //DEBUG
                 break;
               }
@@ -91,7 +82,7 @@ void loop() {
 							if(!master.configCmd(broadcastAddr, DALI_CMD_STORE_DTR_SA))
 								break;
 
-							if(!master.waitForIdle(TIMEOUT)){
+							if(!master.waitForIdle(DALI_BUS_TIMEOUT)){
 								Serial.println(F("idle timeout!")); //DEBUG
 								break;
 							}
@@ -101,7 +92,7 @@ void loop() {
 							if(!master.regClean() | !master.queryCmd(master.setShortAddress(daliSa, LW14_MODE_CMD), DALI_CMD_QUERY_BALLAST))
 								break;
 
-							if(!master.waitForTel1(TIMEOUT)){
+							if(!master.waitForTel1(DALI_BUS_TIMEOUT)){
 								Serial.println(F("telegram timeout!")); //DEBUG
 								break;
 							}
@@ -112,7 +103,7 @@ void loop() {
               Serial.println(F("\r\n--> Well, now make it flash! <--")); //DEBUG
 
               master.indirectCmd(master.setShortAddress(daliSa, LW14_MODE_CMD), DALI_CMD_OFF);
-              master.waitForBus(TIMEOUT);
+              master.waitForBus(DALI_BUS_TIMEOUT);
                 delay(200);
               master.indirectCmd(master.setShortAddress(daliSa, LW14_MODE_CMD), DALI_CMD_MAX_LEVEL);
 							res = true;
@@ -146,7 +137,7 @@ void loop() {
       Serial.println();
 		}
 
-    Serial.println(F("Digit address to set (0-63) to repate the procedure."));
+    Serial.println(F("Digit address to set (0-63) to repeate the procedure."));
 		flush();
 	}
 
@@ -168,9 +159,8 @@ void setup() {
 		delay(1000);
 	Serial.println("Start..");
 
-	if(!master.begin(LW14_I2CADR)){
+	if(!master.begin(LW14_DEF_ADDR))
 		exit(1);
-	}
 
   Serial.println("Digit address to set (0-63):");
 }

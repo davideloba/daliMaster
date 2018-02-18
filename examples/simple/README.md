@@ -1,6 +1,6 @@
 # simple.ino
 
-Simple program that set one lamp with an arc power command and query actual level to confirm the right receiving of the message. Open the Serial monitor, set baudrate to 115000 and see the output.
+Simple program that set one lamp with a direct arc command and query its actual level to confirm the right receiving of the message. Open the Serial monitor, set baudrate to 115000 and see the output. Remember to change *DALISA* and *LEVEL* definitions according with your setup.
 
 Note the use of those methods:
 

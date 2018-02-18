@@ -6,7 +6,7 @@ This is an Arduino™ library to control your DALI lamps with the brand new [dal
 
 ### What is DALI?
 
-DALI (Digital Addressable Lighting Interface) is a powerful protocol to control lighting. Through DALI you can dimmer your led lamps, ask them status, recall a predefined scenario and so on. Of course, the ballast that powers your lamp must be DALI compatible and acts as a DALI slave. You want more information about DALI, don't you? I thinks this is not the right place for that but I'm gonna leave you some useful links to the bottom of this page.
+DALI (Digital Addressable Lighting Interface) is a powerful protocol to control lighting. Through DALI you can dimmer your led lamps, ask them status, recall a predefined scenario and so on. If you want more information about DALI you can find many useful links to the bottom of this page.
 
 ### Can I use DALI with my Arduino™?
 

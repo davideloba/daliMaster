@@ -18,7 +18,7 @@ void setup() {
     
   Serial.print(F("Set lamp "));
   Serial.print(DALISA);
-  Serial.print(F("to "));
+  Serial.print(F(" to "));
   Serial.print(LEVEL);
   Serial.println();
 
@@ -46,9 +46,7 @@ void setup() {
 
   Serial.print(F("Actual lamp level is "));
   Serial.print(myData[0]);
-  Serial.println();
-
-  Serial.println(F("end."));
+  Serial.println(F(". End."));
   
 }
 

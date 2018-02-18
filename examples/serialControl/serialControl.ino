@@ -1,11 +1,3 @@
-/*
- * daliMaster.ino
- *
- *  Created on: 16 Sep 2017
- *      Author: davideloba
- */
-
-
 #include <daliMaster.h>
 #define MAX_CMD 4
 
@@ -161,5 +153,6 @@ void setup() {
     delay(1000);
   Serial.println("daliMaster start..");
 
-  master.begin(23);
+  if(!master.begin(LW14_DEF_ADDR))
+    exit(1);
 }
