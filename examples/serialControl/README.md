@@ -36,7 +36,7 @@ done.
 ### Read LW14 register
 **-r [register address]**
 
-Read LW14 register and echo result.
+Read LW14 register and echo result. See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) for more details.
 * (0x00) STATUS REGISTER  
 The status register is one byte that contains the bus status and command status flags:  
 7 - Bus Error Status *(0 = Bus OK, 1 = Bus fault)*  
@@ -51,7 +51,7 @@ The status register is one byte that contains the bus status and command status 
 The command register has two bytes which directly represent the DALI command. Please refer to the DALI specification for details on the commands.
 * (0xFE) SIGNATURE REGISTER
 The signature register can be used to identify LW14 and get the revision information for the chips firmware.
-See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) for more details.
+
 
 #### Register reading example
 In this example we will ask ballast its phisicaly minimun level and read the response.
