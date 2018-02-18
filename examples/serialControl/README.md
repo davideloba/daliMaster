@@ -75,32 +75,29 @@ Now if we read the (0x00) STATUS REGISTER we will find that a reply is available
 received cmd-> -r,0,,,
 reading lw14 register..
 (0x00) Status reg: 41 ->bits
-  code.	BUS BUSY	OVER	ERR	REPLY	TIME	2TEL	1TEL
-	value	0	  0	 0	0	1	0	0	1
+  code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
+	value	0  0	0 0 1 0 0 1
 done.
 ```
 This register will change quickly after the query in this way.
 ```
-(0x00) Status reg: 0 ->bits
-\tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
-\tvalue\t0\t0\t0\t0\t0\t0\t0\t0
+code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
+value	0  1	0 0 0 0 0 0
 ```
 *Busy = '1' indicates that the last command has not yet been transmitted. Any new command sent to register 1 will be ignored until the last command has been transmitted and the busy bit is cleared.*
 ```
-(0x00) Status reg: 0 ->bits
-\tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
-\tvalue\t0\t0\t0\t0\t0\t0\t0\t0
+code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
+value	0  0	0 0 0 1 0 0
 ```
 *Time = 1 indicates that the time frame for a reply from the last addressed device has not yet timed out and is reset to zero after 22 Te (see DALI specification) or on bus activity.*
 ```
-(0x00) Status reg: 0 ->bits
-\tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
-\tvalue\t0\t0\t0\t0\t0\t0\t0\t0
+code.	BUS BUSY  OVER	ERR	REPLY	TIME	2TEL	1TEL
+value	0  0	0 0 1 0 0 1
 ```
-*Valid Reply = 1 if a telegram has been received within 22 Te (see DALI specification) of sending a command.
+*Valid Reply = 1 if a telegram has been received within 22 Te (see DALI specification) of sending a command.*
 
 
-1Tel = 1 means that 1 byte telegram has been received. The bit is reset on reading register 0x01.*
+*1Tel = 1 means that 1 byte telegram has been received. The bit is reset on reading register 0x01.*
 
 
 So we have a Valid reply and it is a one byte telegram. So read the (0x01) COMMAND REGISTER to get this telegram.  
