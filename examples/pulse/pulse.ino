@@ -11,7 +11,7 @@ void setup() {
     delay(1000);
   Serial.println("Start..");
 
-  master.begin(LW14_I2CADR);
+  master.begin(LW14_DEF_ADDR);
   daliAddr = master.setBroadcastAddress(LW14_MODE_DACP);
 }
 

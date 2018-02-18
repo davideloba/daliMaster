@@ -1,6 +1,6 @@
-#include <daliMaster.h>
 #define MAX_CMD 4
 
+#include <daliMaster.h>
 DALIMASTER master;
 
 void flush();
@@ -151,7 +151,7 @@ void setup() {
   Serial.begin(BAUDRATE);
   Serial.setTimeout(1); //useful
     delay(1000);
-  Serial.println("daliMaster start..");
+  Serial.println(F("start.."));
 
   if(!master.begin(LW14_DEF_ADDR))
     exit(1);

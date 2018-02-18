@@ -54,15 +54,30 @@ The signature register can be used to identify LW14 and get the revision informa
 See [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) for more details.
 
 #### Register reading example
-In this example we will ask ballast its phisicaly minimun level and read the response. First query lamp with short address 8 with DALI_CMD_QUERY_PHY_MIN code (154).
+In this example we will ask ballast its phisicaly minimun level and read the response.
+First do a dummy reading to free previous messagges on 0x01 LW14 register. Do not mind output.
+```
+-r 1
+```
+Query lamp with short address 8 with DALI_CMD_QUERY_PHY_MIN code (154).
 ```
 -q -s 8 154
-TODO
+received cmd-> -q,-s,8,154,
+query command
+dali telegram --> byte 1: 17(00010001), byte 2: 154(10011010)
+success
+(now you should read Command reg(0x01) to see the response)
+done.
 ```
 Now if we read the (0x00) STATUS REGISTER we will find that a reply is available.
 ```
 -r 0
-add
+received cmd-> -r,0,,,
+reading lw14 register..
+(0x00) Status reg: 41 ->bits
+  code.	BUS BUSY	OVER	ERR	REPLY	TIME	2TEL	1TEL
+	value	0	  0	 0	0	1	0	0	1
+done.
 ```
 This register will change quickly after the query in this way.
 ```
@@ -70,23 +85,30 @@ This register will change quickly after the query in this way.
 \tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
 \tvalue\t0\t0\t0\t0\t0\t0\t0\t0
 ```
-
+*Busy = '1' indicates that the last command has not yet been transmitted. Any new command sent to register 1 will be ignored until the last command has been transmitted and the busy bit is cleared.*
 ```
 (0x00) Status reg: 0 ->bits
 \tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
 \tvalue\t0\t0\t0\t0\t0\t0\t0\t0
 ```
-
+*Time = 1 indicates that the time frame for a reply from the last addressed device has not yet timed out and is reset to zero after 22 Te (see DALI specification) or on bus activity.*
 ```
 (0x00) Status reg: 0 ->bits
 \tcode\tBUS\tBUSY\tOVER\tERR\tREPLY\tTIME\t2TEL\t1TEL
 \tvalue\t0\t0\t0\t0\t0\t0\t0\t0
 ```
+*Valid Reply = 1 if a telegram has been received within 22 Te (see DALI specification) of sending a command.
+
+
+1Tel = 1 means that 1 byte telegram has been received. The bit is reset on reading register 0x01.*
+
 
 So we have a Valid reply and it is a one byte telegram. So read the (0x01) COMMAND REGISTER to get this telegram.  
 ```
 -r 1
-add
+received cmd-> -r,1,,,
+reading lw14 register..
+(0x01) Command reg: 170..0..done.
 ```
 So, ballast physical minimum is 170. Notice that even if DALI permits 254 levels, ballast cannot dim light under this value.
 
