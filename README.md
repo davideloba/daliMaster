@@ -14,7 +14,7 @@ Well, the answer is YES.
 
 ### How?
 
-With [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](https://www.codemercs.com/downloads/ledwarrior/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com/en/). Let's make an example to explain how it works.
+With [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](https://www.codemercs.com/downloads/ledwarrior/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com). Let's make an example to explain how it works.
 
 ## Getting Started
 
