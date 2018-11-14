@@ -1,6 +1,6 @@
 # daliMaster
 
-This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](www.ebay.d) shield, with buit-in DALI bus power supply system. b:boom::boom:m!
+This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0) shield, with buit-in DALI bus power supply system. b:boom::boom:m!
 
 ## Description
 
@@ -14,17 +14,17 @@ Well, the answer is YES.
 
 ### How?
 
-With [daliMaster](http://www.ebay.com)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com/en/). Let's make an example to explain how it works.
+With [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0)! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. This shield is powered by [LW14](https://www.codemercs.com/downloads/ledwarrior/LW14_Datasheet.pdf) chip by [Code Mercenaries](https://www.codemercs.com/en/). Let's make an example to explain how it works.
 
 ## Getting Started
 
-* Fit [daliMaster](www.ebay.d) on your Arduino™
+* Fit [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0) on your Arduino™
 
-* Make connections (you can find an example [here](schema.jpeg))
+* Make connections (you can find an example [here](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0))
   * Connect your lamps to their ballasts
   * Connect your ballast to mains..be careful!
-  * Connect your ballasts and [daliMaster](http://www.ebay.com) to DALI bus
-  * Connect your 24V DC power supply to mains and to [daliMaster](http://www.ebay.com)..again, be careful!
+  * Connect your ballasts and [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0) to DALI bus
+  * Connect your 24V DC power supply to mains and to [daliMaster](https://www.ebay.it/itm/DALI-Master-shield-for-Arduino-UNO/253974008596?hash=item3b2207d314:g:yMAAAOSwAbxb6T0g:rk:1:pf:0)..again, be careful!
 
 * If I'm right, now you should have all of lamps on. Let's turn them off.
 
@@ -59,7 +59,7 @@ See more informations about serial commands [here](/examples/serialControl/READM
 ## Useful links
 
 ### LW14
-* [LW14 datasheet](http://shop.codemercs.com/media/files_public/okutobbwyxn/LW14_Datasheet.pdf)
+* [LW14 datasheet](https://www.codemercs.com/downloads/ledwarrior/LW14_Datasheet.pdf)
 
 ### DALI
 * [main commands](http://www.tanzolab.it/www/CM3-HOME_test/dali_commands.pdf)
@@ -76,7 +76,7 @@ See more informations about serial commands [here](/examples/serialControl/READM
 
 ## Credits
 
-* **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/33-led-warrior/270-led-warrior14-2)
+* **Code Mercenaries** - *Original Raspberry Pi library for LW14 Modules* - [LED-Warrior14](https://www.codemercs.com/en/software)
 
 see [credits.md](credits.md) file for details.
 
