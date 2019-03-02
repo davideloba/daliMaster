@@ -1,6 +1,6 @@
 # daliMaster
 
-This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](https://www.ebay.it/itm/254085058149) shield, with buit-in DALI bus power supply system. B:boom::boom:m!
+This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](https://www.ebay.it/itm/254085058149) shield, with built-in DALI bus power supply system. B:boom::boom:m!
 
 ## Description
 
