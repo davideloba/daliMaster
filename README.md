@@ -62,7 +62,7 @@ See more informations about serial commands [here](/examples/serialControl/READM
 * [LW14 datasheet](https://www.codemercs.com/downloads/ledwarrior/LW14_Datasheet.pdf)
 
 ### DALI
-* [main commands](http://www.tanzolab.it/www/CM3-HOME_test/dali_commands.pdf)
+* [main commands](https://www.acmesystems.it/www_raspberry/openhab_dali/dali_commands.pdf)
 * DALI international standard (English/French) [60929 © IEC:2006](http://jnhb.fszjzx.com/upload/biaozhun/pdf/IEC60929Y2006.PDF)
 
 ## Built With
