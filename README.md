@@ -1,6 +1,6 @@
 # daliMaster
 
-This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](https://www.ebay.it/itm/254085058149) shield, with built-in DALI bus power supply system. B:boom::boom:m!
+This is an Arduino™ library to control your DALI lamps with the brand new [daliMaster](https://www.ebay.it/itm/254211672779) shield, with built-in DALI bus power supply system. B:boom::boom:m!
 
 ## Description
 
@@ -14,17 +14,17 @@ Well, the answer is YES.
 
 ### How?
 
-With [daliMaster](https://www.ebay.it/itm/254085058149) shield! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. Let's make an example to explain how it works.
+With [daliMaster](https://www.ebay.it/itm/254211672779) shield! As the name suggests, that shield transforms your Arduino™ in a DALI master, acting as a bridge between I2C interface and DALI bus. Let's make an example to explain how it works.
 
 ## Getting Started
 
-* Fit [daliMaster](https://www.ebay.it/itm/254085058149) shield on your Arduino™
+* Fit [daliMaster](https://www.ebay.it/itm/254211672779) shield on your Arduino™
 
-* Make connections (you can find an example [here](https://www.ebay.it/itm/254085058149))
+* Make connections (you can find an example [here](https://www.ebay.it/itm/254211672779))
   * Connect your lamps to their ballasts
   * Connect your ballast to mains..be careful!
-  * Connect your ballasts and [daliMaster](https://www.ebay.it/itm/254085058149) shield to DALI bus
-  * Connect your 24V DC power supply to mains and to [daliMaster](https://www.ebay.it/itm/254085058149)..again, be careful!
+  * Connect your ballasts and [daliMaster](https://www.ebay.it/itm/254211672779) shield to DALI bus
+  * Connect your 24V DC power supply to mains and to [daliMaster](https://www.ebay.it/itm/254211672779)..again, be careful!
 
 * If I'm right, now you should have all of lamps on. Let's turn them off.
 
@@ -54,7 +54,7 @@ Easy, isn't it? Now you can modulate all lamps from 0 up to 254 with those simpl
 
 ## Next
 
-See more informations about serial commands [here](/examples/serialControl/README.MD). See other examples to play with your lamps (I suggest to try [Pulse.ino](/examples/pulse)). See also the following links to know more about DALI and LW14, the chip from which the [daliMaster](https://www.ebay.it/itm/254085058149) is powered by.
+See more informations about serial commands [here](/examples/serialControl/README.MD). See other examples to play with your lamps (I suggest to try [Pulse.ino](/examples/pulse)). See also the following links to know more about DALI and LW14, the chip from which the [daliMaster](https://www.ebay.it/itm/254211672779) is powered by.
 
 ## Useful links
 
