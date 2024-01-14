@@ -309,7 +309,7 @@ uint8_t DALIMASTER::setBroadcastAddress(unsigned char mode){
 
 
 uint8_t DALIMASTER::setGroupAddress(uint8_t group, uint8_t mode){
-	return (0x80 | ((group & 16) << 1) | mode);
+	return (0x80 | ((group & 15) << 1) | mode);
 }
 
 
